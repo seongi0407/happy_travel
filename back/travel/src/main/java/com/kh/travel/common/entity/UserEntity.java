@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 @Getter
 @NoArgsConstructor
-@Table
+@Table(name = "user_tb")
 @Entity
 public class UserEntity {
 

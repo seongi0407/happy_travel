@@ -4,17 +4,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class ErrorResp {
+public class CommonErrorResp {
 
     private final Integer status;
     private final String code;
-    private final String msg;
+    private final String message;
 
     // 회원가입 dto 유효성 검사 에러 메세지를 위한 생성자
     @Builder
-    public ErrorResp(Integer status, String code, String msg) {
+    public CommonErrorResp(Integer status, String code, String message) {
         this.status = status;
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     } // constructor
 } // class

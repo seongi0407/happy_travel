@@ -4,7 +4,9 @@ import com.kh.travel.common.entity.MarketingAgreeEntity;
 import com.kh.travel.common.entity.TermsAgreeEntity;
 import com.kh.travel.common.entity.UserEntity;
 import com.kh.travel.common.entity.pk.TermsAgreeCompositePK;
-import com.kh.travel.common.exception.DataBaseException;
+import com.kh.travel.common.errorCode.CommonErrorCode;
+import com.kh.travel.common.exception.CommonException;
+import com.kh.travel.user.dto.UserLoginReqDto;
 import com.kh.travel.user.dto.UserSignUpReqDto;
 import com.kh.travel.user.repository.MarketingAgreeRepository;
 import com.kh.travel.user.repository.TermsAgreeRepository;
@@ -23,11 +25,11 @@ public class UserService {
 
     // 회원가입 (회원)
     @Transactional
-    public String userSignUp(UserSignUpReqDto requestDto) throws RuntimeException {
+    public UserEntity userSignUp(UserSignUpReqDto requestDto){
         // ID 중복검사
-        UserEntity findUserById = userRepository.findUserById(requestDto.getUserId());
+        UserEntity findUserById = userRepository.findUserByUserId(requestDto.getUserId());
         if(findUserById != null){
-            return "";
+            throw new CommonException(CommonErrorCode.JOIN_USER_EXISTS);
         }
 
         // insert할 userEntity 생성
@@ -39,7 +41,7 @@ public class UserService {
                 .phoneNo(requestDto.getPhoneNo())
                 .build();
         if(userRepository.save(userEntity) == null){
-            throw new DataBaseException("회원 인서트 실패");
+            throw new CommonException(CommonErrorCode.USER_INSERT_FAIL);
         }
 
         // insert할 termsAgreeEntity 생성
@@ -48,15 +50,15 @@ public class UserService {
                 .userId(requestDto.getUserId())
                 .templateSq(requestDto.getTermsTemplateSq())
                 .build();
-        TermsAgreeEntity termsAgreeTh = TermsAgreeEntity.builder()
+        TermsAgreeEntity termsAgreeEntity = TermsAgreeEntity.builder()
                 .id(termsAgreeCompositePK)
                 .agreeFl(requestDto.getTermsAgreeFl())
                 .build();
-        if(termsAgreeRepository.save(termsAgreeTh) == null){
-            throw new RuntimeException("약관 동의 인서트 실패");
+        if(termsAgreeRepository.save(termsAgreeEntity) == null){
+            throw new CommonException(CommonErrorCode.TERMS_AGREE_INSERT_FAIL);
         }
 
-        // marketingAgreeTh
+        // insert할 marketingAgreeEntity 생성
         MarketingAgreeEntity marketingAgreeEntity = MarketingAgreeEntity.builder()
                 .templateSq(requestDto.getMarketingTemplateSq())
                 .userType(requestDto.getUserType())
@@ -64,9 +66,18 @@ public class UserService {
                 .agreeFl(requestDto.getMarketingAgreeFl())
                 .build();
         if(marketingAgreeRepository.save(marketingAgreeEntity) == null){
-            throw new RuntimeException("마케팅 동의 인서트 실패");
+            throw new CommonException(CommonErrorCode.MARKETING_AGREE_INSERT_FAIL);
         }
 
-        return "회원가입 성공";
+        return userEntity;
     } // userSignUp
+
+    public UserEntity userLogin(UserLoginReqDto requestDto){
+        UserEntity findUserById = userRepository.findUserByUserIdAndUserPwd(requestDto.getUserId(), requestDto.getUserPwd());
+        if(findUserById == null){
+            throw new CommonException(CommonErrorCode.LOGIN_ID_NOT_FOUND);
+        }
+
+        return findUserById;
+    } // userLogin
 } // class

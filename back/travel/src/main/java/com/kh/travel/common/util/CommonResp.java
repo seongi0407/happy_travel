@@ -8,15 +8,15 @@ public class CommonResp {
 
     private final Integer status;
     private final String code;
-    private final String msg;
-    private final Object obj;
+    private final String message;
+    private final Object object;
 
     // API 공통 응답을 위한 생성자
     @Builder
-    public CommonResp(Integer status, String code, String msg, Object obj) {
+    public CommonResp(Integer status, String code, String message, Object object) {
         this.status = status;
         this.code = code;
-        this.msg = msg;
-        this.obj = obj;
+        this.message = message;
+        this.object = object;
     } // constructor
 } // class
