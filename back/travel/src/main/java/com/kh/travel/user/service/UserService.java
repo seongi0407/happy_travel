@@ -103,6 +103,7 @@ public class UserService {
                 .build();
     } // userSignUp
 
+    // 로그인 (회원)
     public UserLoginRespDTO userLogin(UserLoginReqDTO requestDTO){
         // 로그인 결과
         UserEntity loginUserById = userRepository.findUserByUserIdAndUserPwd(requestDTO.getUserId(), requestDTO.getUserPwd());
