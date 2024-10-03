@@ -67,14 +67,25 @@ public class AdminEntity {
 
     // 칼럼 추가해야 함
     @Builder
-    public AdminEntity(String userId, String userPwd, String deptCd, String otpScretKey, LocalDate pwdUpdtDt, String phoneNo, String email1, String email2) {
+    public AdminEntity(
+            String userId
+            , String userPwd
+            , String deptCd
+            , LocalDate pwdUpdtDt
+            , String phoneNo
+            , String email1
+            , String email2
+            , String regUser
+            , LocalDateTime regDtm
+    ) {
         this.userId = userId;
         this.userPwd = userPwd;
         this.deptCd = deptCd;
-        this.otpScretKey = otpScretKey;
         this.pwdUpdtDt = pwdUpdtDt;
         this.phoneNo = phoneNo;
         this.email1 = email1;
         this.email2 = email2;
+        this.regUser = regUser;
+        this.regDtm = regDtm;
     } // constructor
 } // class

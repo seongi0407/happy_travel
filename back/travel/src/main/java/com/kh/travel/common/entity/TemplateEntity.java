@@ -46,7 +46,7 @@ public class TemplateEntity {
     @Column(name = "reg_user", length = 20, nullable = false)
     String regUser;
 
-    @Column(name = "reg_dtm", columnDefinition = "timestamp")
+    @Column(name = "reg_dtm", columnDefinition = "timestamp", nullable = false)
     @CreatedDate
     LocalDateTime regDtm;
 
@@ -57,13 +57,24 @@ public class TemplateEntity {
     @LastModifiedDate
     LocalDateTime updtDtm;
 
-    // 칼럼 추가해야 함
     @Builder
-    public TemplateEntity(String mcategory, String scategory, String title, String content, String useFl) {
+    public TemplateEntity(
+            Long templateSq
+            , String mcategory
+            , String scategory
+            , String title
+            , String content
+            , String useFl
+            , String regUser
+            , LocalDateTime regDtm
+    ) {
+        this.templateSq = templateSq;
         this.mcategory = mcategory;
         this.scategory = scategory;
         this.title = title;
         this.content = content;
         this.useFl = useFl;
+        this.regUser = regUser;
+        this.regDtm = regDtm;
     } // constructor
 } // class

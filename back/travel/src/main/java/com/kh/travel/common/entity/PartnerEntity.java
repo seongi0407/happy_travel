@@ -47,9 +47,15 @@ public class PartnerEntity {
 
     // 칼럼 추가해야 함
     @Builder
-    public PartnerEntity(String userId, String userPwd, String businessLicenseNumber) {
+    public PartnerEntity(
+            String userId
+            , String userPwd
+            , String regUser
+            , LocalDateTime regDtm
+    ) {
         this.userId = userId;
         this.userPwd = userPwd;
-        this.businessLicenseNumber = businessLicenseNumber;
+        this.regUser = regUser;
+        this.regDtm = regDtm;
     } // constructor
 } // class

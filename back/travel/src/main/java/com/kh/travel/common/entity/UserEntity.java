@@ -61,7 +61,6 @@ public class UserEntity {
     @LastModifiedDate
     LocalDateTime updtDtm;
 
-    // 칼럼 추가해야 함
     @Builder
     public UserEntity(
             String userId

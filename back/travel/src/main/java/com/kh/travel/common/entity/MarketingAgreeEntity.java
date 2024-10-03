@@ -61,7 +61,6 @@ public class MarketingAgreeEntity {
     @LastModifiedDate
     LocalDateTime updtDtm;
 
-    // 칼럼 추가해야 함
     @Builder
     public MarketingAgreeEntity(
             Long agreeSq

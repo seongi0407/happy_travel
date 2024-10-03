@@ -40,7 +40,6 @@ public class TermsAgreeEntity {
     @CreatedDate
     LocalDateTime regDtm;
 
-    // 칼럼 추가해야 함
     @Builder
     public TermsAgreeEntity(
             TermsAgreeCompositePK id
