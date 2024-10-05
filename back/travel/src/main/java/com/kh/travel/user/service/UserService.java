@@ -32,9 +32,9 @@ public class UserService {
     @Transactional
     public UserSignUpRespDTO userSignUp(UserSignUpReqDTO requestDTO){
         // ID 중복검사
-        UserEntity findUserById = userRepository.findUserByUserId(requestDTO.getUserId());
-        if(findUserById != null){
-            throw new CommonException(CommonErrorCode.JOIN_USER_EXISTS);
+        UserEntity readUserEntity = userRepository.findByUserId(requestDTO.getUserId());
+        if(readUserEntity != null){
+            throw new CommonException(CommonErrorCode.NO_VALIDITY_USER_ID_EXISTS);
         }
 
         // insert할 userEntity 생성
@@ -50,9 +50,9 @@ public class UserService {
                 .build();
 
         // userEntity insert 결과
-        UserEntity signUpUserEntity = userRepository.save(userEntity);
-        if(signUpUserEntity == null){
-            throw new CommonException(CommonErrorCode.USER_INSERT_FAIL);
+        UserEntity createUserEntity = userRepository.save(userEntity);
+        if(createUserEntity == null){
+            throw new CommonException(CommonErrorCode.DB_ERROR_USER_CREATE);
         }
 
         // insert할 termsAgreeEntity 생성
@@ -70,9 +70,9 @@ public class UserService {
                 .build();
 
         // termsAgreeEntity insert 결과
-        TermsAgreeEntity signUpTermsAgreeEntity = termsAgreeRepository.save(termsAgreeEntity);
-        if(signUpTermsAgreeEntity == null){
-            throw new CommonException(CommonErrorCode.TERMS_AGREE_INSERT_FAIL);
+        TermsAgreeEntity createTermsAgreeEntity = termsAgreeRepository.save(termsAgreeEntity);
+        if(createTermsAgreeEntity == null){
+            throw new CommonException(CommonErrorCode.DB_ERROR_TERMS_AGREE_CREATE);
         }
 
         // insert할 marketingAgreeEntity 생성
@@ -88,35 +88,33 @@ public class UserService {
                 .build();
 
         // marketingAgreeEntity insert 결과
-        MarketingAgreeEntity signUpMarketingAgreeEntity = marketingAgreeRepository.save(marketingAgreeEntity);
-        if(signUpMarketingAgreeEntity == null){
-            throw new CommonException(CommonErrorCode.MARKETING_AGREE_INSERT_FAIL);
+        MarketingAgreeEntity createMarketingAgreeEntity = marketingAgreeRepository.save(marketingAgreeEntity);
+        if(createMarketingAgreeEntity == null){
+            throw new CommonException(CommonErrorCode.DB_ERROR_MARKETING_AGREE_CREATE);
         }
 
         return UserSignUpRespDTO.builder()
-                .userId(signUpUserEntity.getUserId())
-                .userPwd(signUpUserEntity.getUserPwd())
-                .userType(signUpTermsAgreeEntity.getId().getUserType())
-                .email1(signUpUserEntity.getEmail1())
-                .email2(signUpUserEntity.getEmail2())
-                .phoneNo(signUpUserEntity.getPhoneNo())
+                .userId(createUserEntity.getUserId())
+                .userType(createTermsAgreeEntity.getId().getUserType())
+                .email1(createUserEntity.getEmail1())
+                .email2(createUserEntity.getEmail2())
+                .phoneNo(createUserEntity.getPhoneNo())
                 .build();
     } // userSignUp
 
     // 로그인 (회원)
     public UserLoginRespDTO userLogin(UserLoginReqDTO requestDTO){
         // 로그인 결과
-        UserEntity loginUserById = userRepository.findUserByUserIdAndUserPwd(requestDTO.getUserId(), requestDTO.getUserPwd());
-        if(loginUserById == null){
-            throw new CommonException(CommonErrorCode.LOGIN_ID_NOT_FOUND);
+        UserEntity readUserById = userRepository.findUserByUserIdAndUserPwd(requestDTO.getUserId(), requestDTO.getUserPwd());
+        if(readUserById == null){
+            throw new CommonException(CommonErrorCode.DB_ERROR_USER_READ);
         }
 
         return UserLoginRespDTO.builder()
-                .userId(loginUserById.getUserId())
-                .userPwd(loginUserById.getUserPwd())
-                .email1(loginUserById.getEmail1())
-                .email2(loginUserById.getEmail2())
-                .phoneNo(loginUserById.getPhoneNo())
+                .userId(readUserById.getUserId())
+                .email1(readUserById.getEmail1())
+                .email2(readUserById.getEmail2())
+                .phoneNo(readUserById.getPhoneNo())
                 .build();
     } // userLogin
 } // class

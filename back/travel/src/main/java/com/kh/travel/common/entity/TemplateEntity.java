@@ -1,10 +1,7 @@
 package com.kh.travel.common.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,7 +10,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "template_tb")
@@ -22,7 +21,7 @@ public class TemplateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "template_sq", nullable = false, unique = true)
+    @Column(name = "template_sq", nullable = false, unique = true, updatable = false)
     Long templateSq;
 
     // T: 약관, M: 마케팅, A: 알람
@@ -43,10 +42,10 @@ public class TemplateEntity {
     @Column(name = "use_fl", length = 1, nullable = false)
     String useFl;
 
-    @Column(name = "reg_user", length = 20, nullable = false)
+    @Column(name = "reg_user", length = 20, nullable = false, updatable = false)
     String regUser;
 
-    @Column(name = "reg_dtm", columnDefinition = "timestamp", nullable = false)
+    @Column(name = "reg_dtm", columnDefinition = "timestamp", nullable = false, updatable = false)
     @CreatedDate
     LocalDateTime regDtm;
 
@@ -56,25 +55,4 @@ public class TemplateEntity {
     @Column(name = "updt_dtm", columnDefinition = "timestamp")
     @LastModifiedDate
     LocalDateTime updtDtm;
-
-    @Builder
-    public TemplateEntity(
-            Long templateSq
-            , String mcategory
-            , String scategory
-            , String title
-            , String content
-            , String useFl
-            , String regUser
-            , LocalDateTime regDtm
-    ) {
-        this.templateSq = templateSq;
-        this.mcategory = mcategory;
-        this.scategory = scategory;
-        this.title = title;
-        this.content = content;
-        this.useFl = useFl;
-        this.regUser = regUser;
-        this.regDtm = regDtm;
-    } // constructor
 } // class
