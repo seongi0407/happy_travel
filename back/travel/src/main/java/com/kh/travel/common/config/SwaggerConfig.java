@@ -18,8 +18,8 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("SpringDoc")
-                .description("SpringDoc을 사용한 Swagger UI")
+                .title("Happy_Travel")
+                .description("Hayyp_Travel Swagger UI")
                 .version("2.0.2");
     } // apiInfo
 } // class
