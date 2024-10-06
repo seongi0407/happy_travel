@@ -2,10 +2,7 @@ package com.kh.travel.common.entity;
 
 import com.kh.travel.common.entity.pk.TermsAgreeCompositePK;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -14,7 +11,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "terms_agree_th")
@@ -33,25 +32,10 @@ public class TermsAgreeEntity {
     @CreatedDate
     LocalDate agreeDt;
 
-    @Column(name = "reg_user", length = 20, nullable = false)
+    @Column(name = "reg_user", length = 20, nullable = false, updatable = false)
     String regUser;
 
-    @Column(name = "reg_dtm", columnDefinition = "timestamp")
+    @Column(name = "reg_dtm", columnDefinition = "timestamp", nullable = false, updatable = false)
     @CreatedDate
     LocalDateTime regDtm;
-
-    @Builder
-    public TermsAgreeEntity(
-            TermsAgreeCompositePK id
-            , String agreeFl
-            , LocalDate agreeDt
-            , String regUser
-            , LocalDateTime regDtm
-    ) {
-        this.id = id;
-        this.agreeFl = agreeFl;
-        this.agreeDt = agreeDt;
-        this.regUser = regUser;
-        this.regDtm = regDtm;
-    } // constructor
 } // class

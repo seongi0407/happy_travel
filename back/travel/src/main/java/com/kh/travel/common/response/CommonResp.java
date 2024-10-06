@@ -1,27 +1,28 @@
 package com.kh.travel.common.response;
 
-import jakarta.persistence.EntityListeners;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.experimental.FieldDefaults;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 @Getter
+@Builder
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CommonResp {
+public class CommonResp<T> {
 
-    final Integer status;
+    final HttpStatus status;
     final String code;
     final String message;
-    final Object object;
+    final T object;
 
-    // API 공통 응답을 위한 생성자
-    @Builder
-    public CommonResp(Integer status, String code, String message, Object object) {
-        this.status = status;
-        this.code = code;
-        this.message = message;
-        this.object = object;
-    } // constructor
+    // code에 맞는 responseEntity 생성하는 메서드
+    public ResponseEntity<CommonResp> createResponseEntity(CommonResp commonResp){
+        return ResponseEntity.status(commonResp.getStatus()).body(commonResp);
+    } // createResponseEntity
 } // class
