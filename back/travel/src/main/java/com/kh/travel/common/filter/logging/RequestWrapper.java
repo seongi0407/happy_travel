@@ -1,4 +1,4 @@
-package com.kh.travel.common.filter.MDCFilter;
+package com.kh.travel.common.filter.logging;
 
 import jakarta.servlet.ServletInputStream;
 import jakarta.servlet.http.HttpServletRequest;

@@ -17,8 +17,8 @@ import java.util.List;
 public class GlobalExceptionHandler {
     // request 정보 유효성 검사 예외 처리
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ResponseEntity<CommonResp> handleUserSignUpValidationExceptions(MethodArgumentNotValidException exception) {
-        BindingResult bindingResult = exception.getBindingResult();
+    public ResponseEntity<CommonResp> handleUserSignUpValidationExceptions(MethodArgumentNotValidException ex) {
+        BindingResult bindingResult = ex.getBindingResult();
         List<FieldError> fieldErrorList = bindingResult.getFieldErrors();
         FieldError firstFieldError = fieldErrorList.get(0);
         String errorCode = firstFieldError.getDefaultMessage();
@@ -37,9 +37,9 @@ public class GlobalExceptionHandler {
 
     // 전반적인 예외 처리
     @ExceptionHandler(value = {CommonException.class})
-    public ResponseEntity<CommonResp> handleCommonException(CommonException exception){
+    public ResponseEntity<CommonResp> handleCommonException(CommonException ex){
         // CommonErrorCode의 code와 발생한 예외의 code 매핑하는 메서드 호출
-        CommonErrorCode error = CommonErrorCode.findErrorCode(exception.getMessage());
+        CommonErrorCode error = CommonErrorCode.findErrorCode(ex.getMessage());
 
         CommonResp commonResp = CommonResp.builder()
                 .status(error.getStatus())

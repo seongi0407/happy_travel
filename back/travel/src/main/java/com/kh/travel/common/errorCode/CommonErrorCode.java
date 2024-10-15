@@ -40,7 +40,9 @@ public enum CommonErrorCode {
     DB_ERROR_USER_READ(HttpStatus.INTERNAL_SERVER_ERROR, "3003", "가입되지 않은 아이디 또는 잘못된 비밀번호입니다."),
 
     // common error
-    COMMON_ERROR_CODE_NOT_MATCH(HttpStatus.INTERNAL_SERVER_ERROR, "4000", "매칭되는 코드가 존재하지 않습니다.");
+    COMMON_ERROR_CODE_NOT_MATCH(HttpStatus.INTERNAL_SERVER_ERROR, "4000", "매칭되는 코드가 존재하지 않습니다."),
+    COMMON_ERROR_CODE_MDC_FILTER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "4001", "MDC 필터 동작 오류입니다."),
+    COMMON_ERROR_CODE_LOGGING_FILTER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "4002", "로깅 필터 동작 오류입니다.");
 
     final HttpStatus status;
     final String code;

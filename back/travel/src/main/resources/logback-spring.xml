@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <property name="CONSOLE_PATTERN" value="[%X{request_id:-no_request_id}] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %magenta([%thread]) %highlight([%-3level]) %logger{5} line: %L - %msg %n" />
-    <property name="ROLLING_PATTERN" value="[%X{request_id:-no_request_id}] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %magenta([%thread]) %highlight([%-3level]) %logger{5} line: %L - %msg %n" />
+    <property name="CONSOLE_PATTERN" value="[%X{request_id:-no_request_id}] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %magenta([%thread]) %highlight([%-3level]) [%logger{5} line: %L] - [%msg] %n" />
+    <property name="ROLLING_PATTERN" value="[%X{request_id:-no_request_id}] [%d{yyyy-MM-dd HH:mm:ss.SSS}] %magenta([%thread]) %highlight([%-3level]) [%logger{5} line: %L] - [%msg] %n" />
     <property name="FILE_NAME" value="./logs/app.log" />
     <property name="LOG_NAME_PATTERN" value="./logs/app-%d{yyyy-MM-dd-HH-mm}.%i.log" />
     <property name="MAX_FILE_SIZE" value="10MB" />
